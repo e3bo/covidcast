@@ -13,6 +13,8 @@
 #'   "YYYY-MM-DD") indicating dates on which forecasts will be made. If `NULL`,
 #'   the default, then all currently available forecast dates from the given
 #'   forecaster in the COVID Hub will be used.
+#' @param username GitHub account to use. Values other than `reichlab` allows 
+#'   for pulling forecast files forks of the official repository.
 #' @param ... Additional parameters to be passed to [filter_predictions()].
 #' @return List of predictions cards.
 #' 
@@ -26,8 +28,9 @@
 #' @importFrom stringr str_detect
 #' @export
 get_covidhub_predictions <- function(covid_hub_forecaster_name,
+                                     username = reichlab, 
                                      forecast_dates = NULL, ...) {
-  url <- "https://raw.githubusercontent.com/reichlab/covid19-forecast-hub/master/data-processed"
+  url <- paste0("https://raw.githubusercontent.com/", username, "/covid19-forecast-hub/master/data-processed")
   pcards <- list()
   if (is.null(forecast_dates))
     forecast_dates <- get_forecast_dates(covid_hub_forecaster_name)
