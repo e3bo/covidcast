@@ -28,7 +28,7 @@
 #' @importFrom stringr str_detect
 #' @export
 get_covidhub_predictions <- function(covid_hub_forecaster_name,
-                                     username = reichlab, 
+                                     username = "reichlab", 
                                      forecast_dates = NULL, ...) {
   url <- paste0("https://raw.githubusercontent.com/", username, "/covid19-forecast-hub/master/data-processed")
   pcards <- list()
