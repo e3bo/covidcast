@@ -33,7 +33,7 @@ get_covidhub_predictions <- function(covid_hub_forecaster_name,
   url <- paste0("https://raw.githubusercontent.com/", username, "/covid19-forecast-hub/master/data-processed")
   pcards <- list()
   if (is.null(forecast_dates))
-    forecast_dates <- get_forecast_dates(covid_hub_forecaster_name)
+    forecast_dates <- get_forecast_dates(covid_hub_forecaster_name, username = username)
   forecast_dates <- as.character(forecast_dates)
   for (forecast_date in forecast_dates) {
     filename <- sprintf("%s/%s/%s-%s.csv",
@@ -99,13 +99,14 @@ get_covidhub_predictions <- function(covid_hub_forecaster_name,
 #'
 #' @param covid_hub_forecaster_name String indicating of the forecaster
 #'   (matching what it is called on the COVID Hub).
+#' @param username GitHub username of COVID Hub repository
 #' 
 #' @importFrom rvest html_nodes html_text
 #' @importFrom xml2 read_html
 #' @importFrom stringr str_remove_all str_match_all
 #' @export
-get_forecast_dates <- function(covid_hub_forecaster_name) {
-  url <- "https://github.com/reichlab/covid19-forecast-hub/tree/master/data-processed/"
+get_forecast_dates <- function(covid_hub_forecaster_name, username = "reichlab") {
+  url <- paste0("https://github.com/", username, "/covid19-forecast-hub/tree/master/data-processed/")
   out <- xml2::read_html(paste0(url, covid_hub_forecaster_name)) %>%
     rvest::html_nodes(xpath = "//*[@id=\"js-repo-pjax-container\"]/div[2]/div/div[3]") %>%
     rvest::html_text() %>%
