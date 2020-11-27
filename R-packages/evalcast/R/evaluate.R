@@ -169,7 +169,11 @@ evaluate_predictions_single_ahead <- function(predictions_cards,
 check_valid_forecaster_output <- function(pred_card) {
   null_forecasts <- pred_card$forecast_distribution %>%
     map_lgl(is.null)
-  covidhub_probs <- c(0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99)
+  if (attr(pred_card, "signal")$signal == "confirmed_incidence_num"){
+    covidhub_probs <- c(0.025, 0.1, 0.25, 0.5, 0.75, 0.9, 0.975)
+  } else {
+    covidhub_probs <- c(0.01, 0.025, seq(0.05, 0.95, by = 0.05), 0.975, 0.99)
+  }
   wrong_format <- pred_card$forecast_distribution %>%
     map_lgl(~ any(names(.x) != c("probs", "quantiles")))
   wrong_probs <- pred_card$forecast_distribution %>%
