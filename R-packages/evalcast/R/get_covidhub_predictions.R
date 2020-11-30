@@ -160,7 +160,7 @@ load_local_covidhub <- function (covid_hub_forecaster_name, forecast_dates = NUL
     out <- dir(covid_hub_forecaster_name) %>% 
       stringr::str_match_all(sprintf("(20\\d{2}-\\d{2}-\\d{2})-%s.csv", 
                                      covid_hub_forecaster_name))
-    forecast_dates <- lubridate::as_date(out[[1]][, 2])
+    forecast_dates <- purrr::map_chr(out, 2) %>% lubridate::as_date()
   }
   forecast_dates <- as.character(forecast_dates)
   for (forecast_date in forecast_dates) {
