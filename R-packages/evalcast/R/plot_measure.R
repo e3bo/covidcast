@@ -31,7 +31,7 @@ plot_measure <- function(scorecards, err_name, type = "boxplot") {
       ##  ggplot(aes(x = forecaster, y = !!err_name2)) +
       ggplot(aes(x = .data$forecaster, y = .data[[err_name]])) +
       geom_boxplot() +
-      facet_wrap(~ forecast_date) +
+      facet_wrap(~ end) +
       scale_y_log10() + 
       theme_bw() 
   }
@@ -51,7 +51,7 @@ plot_measure <- function(scorecards, err_name, type = "boxplot") {
       arrange(.data$avg_err)
     all$location <- factor(all$location, levels = ordered_levels$location)
     all %>%
-      mutate(forecast_date = factor(.data$forecast_date)) %>%
+      mutate(end = factor(.data$end)) %>%
       ## ggplot(aes(x = !!err_name2,
       ##            y = location,
       ##            color = forecaster,
@@ -59,7 +59,7 @@ plot_measure <- function(scorecards, err_name, type = "boxplot") {
       ggplot(aes(x = .data[[err_name]],
                  y = .data$location,
                  color = .data$forecaster,
-                 pch = .data$forecast_date)) +
+                 pch = .data$end)) +
       geom_point() +
       theme_bw()
   }
