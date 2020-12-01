@@ -34,7 +34,7 @@ plot_width <- function(cards, alpha = 0.2, levels = c(0.5, 0.7, 0.9),
   df %>%
     select(.data$forecaster, .data$location, .data$forecast_date, .data$coverage) %>%
     unnest(.data$coverage) %>%
-    group_by(.data$forecaster, .data$nominal, .data$forecast_date) %>%
+    group_by(.data$forecaster, .data$nominal, .data$end) %>%
     summarize(level = as.factor(levels),
               width = quantile(.data$width, probs = levels)) %>%
     ggplot(aes(x = .data$nominal,
@@ -42,7 +42,7 @@ plot_width <- function(cards, alpha = 0.2, levels = c(0.5, 0.7, 0.9),
                color = .data$forecaster,
                lty = .data$level)) +
     geom_line() +
-    facet_wrap(~ .data$forecast_date) +
+    facet_wrap(~ .data$end) +
     labs(x = "Nominal coverage", y = "Interval width") + 
     theme_bw() + theme(legend.position = legend_position)
 }
