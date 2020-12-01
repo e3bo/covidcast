@@ -32,7 +32,7 @@ plot_width <- function(cards, alpha = 0.2, levels = c(0.5, 0.7, 0.9),
   df$coverage <- df$forecast_distribution %>%
     map(compute_width_single_distribution)
   df %>%
-    select(.data$forecaster, .data$location, .data$forecast_date, .data$coverage) %>%
+    select(.data$forecaster, .data$location, .data$end, .data$coverage) %>%
     unnest(.data$coverage) %>%
     group_by(.data$forecaster, .data$nominal, .data$end) %>%
     summarize(level = as.factor(levels),
