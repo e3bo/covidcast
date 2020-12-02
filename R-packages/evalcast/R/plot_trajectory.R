@@ -141,7 +141,7 @@ plot_trajectory <- function(list_of_predictions_cards,
        geom_ribbon(aes(ymin = lower,
                        ymax = upper,
                        fill = forecaster_name,
-                       group = forecast_date),
+                       group = interaction(forecast_date, forecaster_name)),
                        alpha = .1,
                        colour = NA,
                        show.legend = FALSE) + 
