@@ -133,7 +133,7 @@ plot_trajectory <- function(list_of_predictions_cards,
   p <- ggplot(preds_df, aes(x = reference_period)) +
        geom_line(aes(y = point,
                      col = forecaster_name, 
-                     group = forecast_date),
+                     group = interaction(forecast_date, forecaster_name)),
                      size = 1) + 
        geom_point(aes(y = point,
                       col = forecaster_name, 
